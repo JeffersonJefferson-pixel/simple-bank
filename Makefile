@@ -1,3 +1,5 @@
+DIR := ${CURDIR}
+
 postgres:
 	docker run --name postgres12 -p 5433:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
 
@@ -20,7 +22,7 @@ migratedown1:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/simple_bank?sslmode=disable" -verbose down 1
 
 sqlc:
-	docker run --rm -v /d/side-learn/backend_master/simple-bank/:/src -w /src kjconroy/sqlc generate
+	docker run --rm -v ${DIR}:/src -w /src kjconroy/sqlc generate
 
 test:
 	go test -v -cover ./...
