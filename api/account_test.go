@@ -21,14 +21,14 @@ func TestGetAccountApi(t *testing.T) {
 
 	account := randomAccount()
 
-	testCases := []struct{
-		name string
-		accountID int64
-		buildStubs func(store *mockdb.MockStore)
+	testCases := []struct {
+		name          string
+		accountID     int64
+		buildStubs    func(store *mockdb.MockStore)
 		checkResponse func(t *testing.T, record *httptest.ResponseRecorder)
-	} {
+	}{
 		{
-			name: "OK",
+			name:      "OK",
 			accountID: account.ID,
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -42,7 +42,7 @@ func TestGetAccountApi(t *testing.T) {
 			},
 		},
 		{
-			name: "NotFound",
+			name:      "NotFound",
 			accountID: account.ID,
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -55,7 +55,7 @@ func TestGetAccountApi(t *testing.T) {
 			},
 		},
 		{
-			name: "InternalError",
+			name:      "InternalError",
 			accountID: account.ID,
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -68,7 +68,7 @@ func TestGetAccountApi(t *testing.T) {
 			},
 		},
 		{
-			name: "InvalidID",
+			name:      "InvalidID",
 			accountID: 0,
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -87,32 +87,32 @@ func TestGetAccountApi(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-		
+
 			store := mockdb.NewMockStore(ctrl)
-		
+
 			//build stubs
 			tc.buildStubs(store)
-		
+
 			server := NewServer(store)
 			recorder := httptest.NewRecorder()
-		
+
 			url := fmt.Sprintf("/accounts/%d", tc.accountID)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
 			require.NoError(t, err)
-		
+
 			server.router.ServeHTTP(recorder, request)
-		
+
 			// check respones
 			tc.checkResponse(t, recorder)
 		})
-	}	
+	}
 }
 
 func randomAccount() db.Account {
 	return db.Account{
-		ID: util.RandomInt(1, 1000),
-		Owner: util.RandomOwner(),
-		Balance: util.RandomMoney(),
+		ID:       util.RandomInt(1, 1000),
+		Owner:    util.RandomOwner(),
+		Balance:  util.RandomMoney(),
 		Currency: util.RandomCurrency(),
 	}
 }
