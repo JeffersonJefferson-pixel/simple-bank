@@ -110,10 +110,8 @@ func TestCreateUserApi(t *testing.T) {
 
 			// verify response
 			tc.checkResponse(t, recorder)
-
 		})
 	}
-
 }
 
 func randomUser(t *testing.T) (user db.User, password string) {
