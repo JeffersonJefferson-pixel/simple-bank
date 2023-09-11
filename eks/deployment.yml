@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: simple-bank-api
-        image: 737167701957.dkr.ecr.ap-southeast-1.amazonaws.com/simplebank:1d7727179268d6efd8fe7e93402d3c3b80ecf4f0
+        image: 737167701957.dkr.ecr.ap-southeast-1.amazonaws.com/simplebank:latest
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
