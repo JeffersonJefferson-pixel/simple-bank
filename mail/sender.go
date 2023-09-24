@@ -29,11 +29,11 @@ type GmailSender struct {
 	fromEmailPassword string
 }
 
-func NewGmailSender(name string, fromEmailAddress string, fromEmailPAssword string) EmailSender {
+func NewGmailSender(name string, fromEmailAddress string, fromEmailPassword string) EmailSender {
 	return &GmailSender{
 		name:              name,
 		fromEmailAddress:  fromEmailAddress,
-		fromEmailPassword: fromEmailPAssword,
+		fromEmailPassword: fromEmailPassword,
 	}
 }
 

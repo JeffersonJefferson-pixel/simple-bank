@@ -2,7 +2,7 @@
 
 make migration
 ```
-migrate create -ext -dir db/migration -seq <migration-name>
+migrate create -ext sql -dir db/migration -seq <migration-name>
 ```
 
 AWS ingress controller
